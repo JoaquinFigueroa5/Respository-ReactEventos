@@ -10,7 +10,6 @@ import {
   MenuList,
   MenuItem,
   MenuDivider,
-  useDisclosure,
   useColorModeValue,
   Stack,
   useColorMode,
@@ -22,26 +21,41 @@ import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { useFormContext } from "../context/FormContext";
 
-const NavLink = ({ children, to }) => {
-  return (
-    <Box
-      as="div"
-      px={3}
-      py={2}
-      rounded={"md"}
-      _hover={{
-        textDecoration: "none",
-        bg: useColorModeValue("gray.200", "gray.700"),
-      }}
-    >
-      <Link to={to}>{children}</Link>
-    </Box>
-  );
-};
+const NavLink = ({ children, to }) => (
+  <Box
+    as="div"
+    px={3}
+    py={2}
+    rounded="md"
+    position="relative"
+    _after={{
+      content: '""',
+      position: "absolute",
+      width: "0%",
+      height: "2px",
+      bottom: 0,
+      left: 0,
+      bg: "white",
+      transition: "width 0.3s ease-in-out",
+    }}
+    _hover={{
+      textDecoration: "none",
+      bg: useColorModeValue("gray.200", "gray.700"),
+      _after: {
+        width: "100%",
+      },
+    }}
+  >
+    <Link to={to}>{children}</Link>
+  </Box>
+);
 
 export default function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode();
   const { savedForm } = useFormContext();
+  const { name, email } = savedForm;
+  console.log(name);
+  
 
   return (
     <Box bg={useColorModeValue("gray.100", "gray.900")} w="100%">
@@ -50,12 +64,12 @@ export default function NavBar() {
         mx="auto"
         px={6}
         h={16}
-        alignItems={"center"}
-        justifyContent={"space-between"}
+        alignItems="center"
+        justifyContent="space-between"
       >
-        <HStack spacing={8} alignItems={"center"}>
+        <HStack spacing={8} alignItems="center">
           <Box fontWeight="bold" fontSize="xl">
-            Logo
+            Eventos
           </Box>
           <HStack as="nav" spacing={8} display={{ base: "none", md: "flex" }}>
             <NavLink to="/dashboard">DashBoard</NavLink>
@@ -64,49 +78,97 @@ export default function NavBar() {
           </HStack>
         </HStack>
 
-        <Flex alignItems={"center"}>
-          <Stack direction={"row"} spacing={6}>
+        <Flex alignItems="center">
+          <Stack direction="row" spacing={6}>
             <Button onClick={toggleColorMode}>
               {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
             </Button>
 
             <Menu>
-              <MenuButton
-                as={Button}
-                rounded={"full"}
-                variant={"link"}
-                cursor={"pointer"}
-                minW={0}
-              >
-                <Avatar
-                  size={"sm"}
-                  src={
-                    "https://i.ytimg.com/vi/Dw9mEc7Eac0/sd2.jpg?sqp=-oaymwEoCIAFEOAD8quKqQMcGADwAQH4Ab4EgALABIoCDAgAEAEYWyBUKGUwDw==&rs=AOn4CLBpcG8SU7WtlCysJMLYePJPxcBMRw"
-                  }
-                />
-              </MenuButton>
-              <MenuList alignItems={"center"}>
-                <br />
-                <Center>
-                  <Avatar
-                    size={"2xl"}
-                    src={
-                      "https://i.ytimg.com/vi/Dw9mEc7Eac0/sd2.jpg?sqp=-oaymwEoCIAFEOAD8quKqQMcGADwAQH4Ab4EgALABIoCDAgAEAEYWyBUKGUwDw==&rs=AOn4CLBpcG8SU7WtlCysJMLYePJPxcBMRw"
-                    }
-                  />
-                </Center>
-                <br />
-                <Center>
-                  <Text fontWeight="bold" pr='5%' pl='5%'>{savedForm}</Text>
-                </Center>
-                <br />
-                <MenuDivider />
-                <MenuItem>Your Servers</MenuItem>
-                <MenuItem>Account Settings</MenuItem>
-                <Link to='/'>
-                  <MenuItem>Logout</MenuItem>
-                </Link>
-              </MenuList>
+              {({ isOpen }) => (
+                <>
+                  <MenuButton
+                    as={Button}
+                    rounded="full"
+                    variant="link"
+                    cursor="pointer"
+                    minW={0}
+                  >
+                    <Avatar
+                      size="sm"
+                      src="https://i.ytimg.com/vi/Dw9mEc7Eac0/sd2.jpg?sqp=-oaymwEoCIAFEOAD8quKqQMcGADwAQH4Ab4EgALABIoCDAgAEAEYWyBUKGUwDw==&rs=AOn4CLBpcG8SU7WtlCysJMLYePJPxcBMRw"
+                    />
+                  </MenuButton>
+                  <MenuList alignItems="center">
+                    <br />
+                    <Center>
+                      <Avatar
+                        size="2xl"
+                        src="https://i.ytimg.com/vi/Dw9mEc7Eac0/sd2.jpg?sqp=-oaymwEoCIAFEOAD8quKqQMcGADwAQH4Ab4EgALABIoCDAgAEAEYWyBUKGUwDw==&rs=AOn4CLBpcG8SU7WtlCysJMLYePJPxcBMRw"
+                      />
+                    </Center>
+                    <br />
+                    <Center flexDirection="column" w="100%" px={4}>
+                      <Text fontWeight="bold" textAlign="center">
+                        {savedForm.name}
+                      </Text>
+                      <Box
+                        height="2px"
+                        width={isOpen ? "100%" : "0%"}
+                        bg="white"
+                        transition="width 0.4s ease-in-out"
+                        transformOrigin="center"
+                        mx="auto"
+                      />
+                    </Center>
+                    <br />
+                    <MenuDivider />
+                    {["Your Servers", "Account Settings"].map((item) => (
+                      <MenuItem
+                        key={item}
+                        position="relative"
+                        _after={{
+                          content: '""',
+                          position: "absolute",
+                          width: "0%",
+                          height: "2px",
+                          bottom: 0,
+                          left: 0,
+                          bg: "white",
+                          transition: "width 0.3s ease-in-out",
+                        }}
+                        _hover={{
+                          bg: useColorModeValue("gray.200", "gray.700"),
+                          _after: { width: "100%" },
+                        }}
+                      >
+                        {item}
+                      </MenuItem>
+                    ))}
+                    <Link to="/">
+                      <MenuItem
+                        position="relative"
+                        _after={{
+                          content: '""',
+                          position: "absolute",
+                          width: "0%",
+                          height: "2px",
+                          bottom: 0,
+                          left: 0,
+                          bg: "white",
+                          transition: "width 0.3s ease-in-out",
+                        }}
+                        _hover={{
+                          bg: useColorModeValue("gray.200", "gray.700"),
+                          _after: { width: "100%" },
+                        }}
+                      >
+                        Logout
+                      </MenuItem>
+                    </Link>
+                  </MenuList>
+                </>
+              )}
             </Menu>
           </Stack>
         </Flex>
