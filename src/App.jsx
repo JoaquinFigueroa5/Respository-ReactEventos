@@ -2,8 +2,6 @@ import { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import { FormProvider } from "./context/FormContext";
-// import NavBar from './components/NavBar'
-// import Auth from './components/Auth';
 import Loading from "./components/Loading";
 
 function App() {

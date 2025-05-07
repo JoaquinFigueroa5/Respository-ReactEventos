@@ -3,7 +3,7 @@ import { createContext, useState, useContext } from "react";
 const FormContext = createContext();
 
 export const FormProvider = ({ children }) => {
-    const [savedForm, setSavedForm] = useState({ name: '', email: ''});
+    const [savedForm, setSavedForm] = useState();
 
     return (
         <FormContext.Provider value={{ savedForm, setSavedForm}} >

@@ -20,6 +20,7 @@ import {
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { useFormContext } from "../context/FormContext";
+import { useEffect } from "react";
 
 const NavLink = ({ children, to }) => (
   <Box
@@ -53,9 +54,7 @@ const NavLink = ({ children, to }) => (
 export default function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode();
   const { savedForm } = useFormContext();
-  const { name, email } = savedForm;
-  console.log(name);
-  
+
 
   return (
     <Box bg={useColorModeValue("gray.100", "gray.900")} w="100%">
@@ -68,13 +67,15 @@ export default function NavBar() {
         justifyContent="space-between"
       >
         <HStack spacing={8} alignItems="center">
-          <Box fontWeight="bold" fontSize="xl">
-            Eventos
-          </Box>
+          <Link to='/dashboard' >
+            <Box fontWeight="bold" fontSize="xl">
+              Eventos
+            </Box>
+          </Link>
           <HStack as="nav" spacing={8} display={{ base: "none", md: "flex" }}>
-            <NavLink to="/dashboard">DashBoard</NavLink>
-            <NavLink to="/projects">Projects</NavLink>
-            <NavLink to="/team">Team</NavLink>
+            <NavLink to="/dashboard">Trabajo</NavLink>
+            <NavLink to="/projects">Personal</NavLink>
+            <NavLink to="/team">Reuniones</NavLink>
           </HStack>
         </HStack>
 
@@ -109,8 +110,8 @@ export default function NavBar() {
                     </Center>
                     <br />
                     <Center flexDirection="column" w="100%" px={4}>
-                      <Text fontWeight="bold" textAlign="center">
-                        {savedForm.name}
+                      <Text fontWeight="bold" textAlign="center" py={6} >
+                        {savedForm}
                       </Text>
                       <Box
                         height="2px"
@@ -121,8 +122,6 @@ export default function NavBar() {
                         mx="auto"
                       />
                     </Center>
-                    <br />
-                    <MenuDivider />
                     {["Your Servers", "Account Settings"].map((item) => (
                       <MenuItem
                         key={item}
