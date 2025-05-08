@@ -5,13 +5,14 @@ import {
   Grid,
   Text,
   Flex,
-  useColorModeValue
+  useColorModeValue,
+  Tooltip,  // IMPORTANTE
 } from "@chakra-ui/react";
 import dayjs from "dayjs";
 
 const daysOfWeek = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
 
-export default function Calendar() {
+export default function Calendar({ events = [] }) {
   const [currentDate, setCurrentDate] = useState(dayjs());
   const [selectedDate, setSelectedDate] = useState(null);
 
@@ -39,19 +40,49 @@ export default function Calendar() {
       const isSelected = selectedDate?.isSame(date, 'day');
       const isToday = date.isSame(today, 'day');
 
+      const hasEvent = events && events.some(event => dayjs(event.date).isSame(date, 'day'));
+      const event = events.find(event => dayjs(event.date).isSame(date, 'day'));
+
+      const statusColors = {
+        "Hecha": "green.500",
+        "Proceso": "yellow.500",
+        "Pendiente": "red.500"
+      };
+
       let bg = "transparent";
-      if (isSelected) bg = bgSelected;
-      else if (isToday) bg = bgToday;
+
+      if (hasEvent) {
+        bg = statusColors[event.status] || 'teal.500';
+      } else if (isSelected) {
+        bg = bgSelected;
+      } else if (isToday) {
+        bg = bgToday;
+      }
+
+
+
 
       days.push(
-        <Button
+        <Tooltip
           key={day}
-          onClick={() => setSelectedDate(date)}
-          bg={bg}
-          _hover={{ bg: useColorModeValue('gray.300', 'black') }}
+          label={hasEvent ? `${event?.title} - ${event?.descripcion}` : ""}
+          aria-label="Event Information"
+          placement="top"
+          maxWidth="200px"
+          fontSize="sm"
+          padding="8px"
+          whiteSpace="normal"
         >
-          {day}
-        </Button>
+          <Button
+            onClick={() => setSelectedDate(date)}
+            bg={bg}
+            border={isSelected ? '2px solid black' : isToday ? '4px solid gray' : 'none'}
+            _hover={{ bg: useColorModeValue('gray.300', 'black') }}
+            color={event ? "white" : "inherit"}
+          >
+            {day}
+          </Button>
+        </Tooltip>
       );
     }
 
@@ -59,7 +90,7 @@ export default function Calendar() {
   };
 
   return (
-    <Box p={5} maxW="md" mx="auto" borderWidth={1} borderRadius="lg">
+    <Box p={5} maxW="4xl" mx="auto" borderWidth={1} borderRadius="lg">
       <Flex justify="space-between" align="center" mb={4}>
         <Button onClick={handlePrevMonth}>&lt;</Button>
         <Text fontWeight="bold">

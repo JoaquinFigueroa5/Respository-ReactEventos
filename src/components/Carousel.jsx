@@ -46,7 +46,8 @@ export default function Carousel() {
   ];
 
   return (
-    <Box position="relative" height="600px" width="full" overflow="hidden">
+    <Box position="relative" height="600px" width="100%" maxW="100%" overflow="hidden">
+
       <link
         rel="stylesheet"
         type="text/css"

@@ -73,9 +73,10 @@ export default function NavBar() {
             </Box>
           </Link>
           <HStack as="nav" spacing={8} display={{ base: "none", md: "flex" }}>
-            <NavLink to="/dashboard">Trabajo</NavLink>
-            <NavLink to="/projects">Personal</NavLink>
-            <NavLink to="/team">Reuniones</NavLink>
+            <NavLink to="/events">General</NavLink>
+            <NavLink to="/trabajo">Trabajo</NavLink>
+            <NavLink to="/personales">Personal</NavLink>
+            <NavLink to="/reuniones">Reuniones</NavLink>
           </HStack>
         </HStack>
 

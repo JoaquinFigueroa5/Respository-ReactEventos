@@ -1,26 +1,36 @@
-import React from "react";
-import { Box } from "@chakra-ui/react";
+import {
+  Flex,
+  Box
+} from "@chakra-ui/react";
 import NavBar from "./NavBar";
-import Carousel from "./Carousel";
+import SidebarAlert from "./SideBar";
 import Calendar from "./Calendar";
-import { Flex } from "@chakra-ui/react";
 import OptionsEvent from "./OptionsEvent";
-
+import Carousel from "./Carousel";
+import Footer from "./Footer";
+import { useEvents } from "../context/EventsContext";
 
 const LandingPage = () => {
+  const { events } = useEvents();
   return (
     <>
       <NavBar />
-      <Carousel />
-      <Flex p={5} gap={4} align="flex-start">
-        <Box>
-          <OptionsEvent />
+      <Box display='flex'>
+        <SidebarAlert minW="250px" />
+        <Box flex="1" minW="0">
+          <Carousel />
+          <Flex p={5} gap={4} align="flex-start">
+            <Box>
+              <OptionsEvent />
+            </Box>
+            <Box flex="1">
+              <Calendar events={events} />
+            </Box>
+          </Flex>
         </Box>
+      </Box>
+      <Footer />
 
-        <Box flex="1">
-          <Calendar />
-        </Box>
-      </Flex>
     </>
   );
 };

@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 
 export default function Auth() {
-    const { setSavedForm } = useFormContext();
+  const { setSavedForm } = useFormContext();
 
   const [formValidation, setFormValidation] = useState({
     email: undefined,
@@ -43,7 +43,7 @@ export default function Auth() {
     data.preventDefault();
     setSavedForm(`${name} | ${email}`);
     navigate('/dashboard')
-    
+
   };
 
   const handleEmailChange = (e) => {
@@ -55,8 +55,8 @@ export default function Auth() {
         value.length === 0
           ? "Email is required"
           : !regex.test(value)
-          ? "Email is invalid"
-          : "",
+            ? "Email is invalid"
+            : "",
     }));
     setEmail(value);
   };
@@ -87,8 +87,8 @@ export default function Auth() {
         value.length === 0
           ? "Password is required"
           : value.length < 5
-          ? "Password is too short"
-          : "",
+            ? "Password is too short"
+            : "",
     }));
     setPassword(value);
   };
@@ -257,18 +257,15 @@ export default function Auth() {
                   </FormErrorMessage>
                 </FormControl>
 
-                {/* <Link to="/dashboard" style={{ width: "100%" }}>
-                  
-                </Link> */}
                 <Button
-                    bg={buttonColor}
-                    color="white"
-                    _hover={{ bg: 'red.700' }}
-                    width="full"
-                    type="submit"
-                    isDisabled={!isValidForm}
-                  >
-                    Sign Up
+                  bg={buttonColor}
+                  color="white"
+                  _hover={{ bg: 'red.700' }}
+                  width="full"
+                  type="submit"
+                  isDisabled={!isValidForm}
+                >
+                  Sign Up
                 </Button>
               </VStack>
             </form>
