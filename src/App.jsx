@@ -5,8 +5,6 @@ import { FormProvider } from "./context/FormContext";
 import { EventsProvider } from "./context/EventsContext";
 import Loading from "./components/Loading";
 
-import { Toaster } from 'react-hot-toast'
-
 function App() {
   const LandingPage = lazy(() => import("./components/LandingPage"));
   const Auth = lazy(() => import("./components/Auth"));
@@ -30,10 +28,6 @@ function App() {
                   <Route path="/personales" element={ <PersonalView/> } />
                   <Route path="/reuniones" element={ <ReunionView/> } />
                 </Routes>
-                <Toaster
-                  position="bottom-top-center"
-                  reverseOrder={false}
-                />
               </Suspense>
             </BrowserRouter>
           </FormProvider>

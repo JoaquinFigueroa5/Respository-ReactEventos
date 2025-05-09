@@ -20,7 +20,6 @@ import {
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { useFormContext } from "../context/FormContext";
-import { useEffect } from "react";
 
 const NavLink = ({ children, to }) => (
   <Box
