@@ -129,12 +129,16 @@ export default function EventsList() {
                     </Stack>
                 </Box>
 
-                <Box flex="0 0 300px">
+                <Box
+                    flex="0 0 300px"
+                    position="sticky"
+                    top="20px"
+                >
                     <Calendar events={events} />
                 </Box>
+
             </Flex>
 
-            {/* MODAL DE EDICIÓN */}
             <Modal isOpen={isOpen} onClose={onClose} isCentered>
                 <ModalOverlay />
                 <ModalContent>

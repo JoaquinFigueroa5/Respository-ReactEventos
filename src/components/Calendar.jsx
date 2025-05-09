@@ -6,7 +6,7 @@ import {
   Text,
   Flex,
   useColorModeValue,
-  Tooltip,  // IMPORTANTE
+  Tooltip,
 } from "@chakra-ui/react";
 import dayjs from "dayjs";
 
@@ -59,13 +59,10 @@ export default function Calendar({ events = [] }) {
         bg = bgToday;
       }
 
-
-
-
       days.push(
         <Tooltip
           key={day}
-          label={hasEvent ? `${event?.title} - ${event?.descripcion}` : ""}
+          label={hasEvent ? `${event?.title} - ${event?.descripcion}  ${event?.startTime} - ${event?.endTime} ` : ""}
           aria-label="Event Information"
           placement="top"
           maxWidth="200px"
@@ -108,6 +105,7 @@ export default function Calendar({ events = [] }) {
       <Grid templateColumns="repeat(7, 1fr)" gap={2} mt={2}>
         {renderCalendarDays()}
       </Grid>
+      <Text textAlign="center"> 🔴 Pendiente 🟡 En proceso 🟢 Hecho </Text>
     </Box>
   );
 }
