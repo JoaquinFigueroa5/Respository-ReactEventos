@@ -123,28 +123,6 @@ export default function NavBar() {
                         mx="auto"
                       />
                     </Center>
-                    {["Your Servers", "Account Settings"].map((item) => (
-                      <MenuItem
-                        key={item}
-                        position="relative"
-                        _after={{
-                          content: '""',
-                          position: "absolute",
-                          width: "0%",
-                          height: "2px",
-                          bottom: 0,
-                          left: 0,
-                          bg: "white",
-                          transition: "width 0.3s ease-in-out",
-                        }}
-                        _hover={{
-                          bg: useColorModeValue("gray.200", "gray.700"),
-                          _after: { width: "100%" },
-                        }}
-                      >
-                        {item}
-                      </MenuItem>
-                    ))}
                     <Link to="/">
                       <MenuItem
                         position="relative"
